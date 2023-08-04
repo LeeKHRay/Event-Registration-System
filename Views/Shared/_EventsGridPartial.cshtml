@@ -1,0 +1,31 @@
+﻿@model List<EventViewModel>
+
+@if (Model?.Count > 0)
+{
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+        @foreach (EventViewModel viewModel in Model)
+        {
+            <div class="col mb-3">
+                <div class="card event">
+                    <div class="event-img-container d-flex justify-content-center align-items-center">
+                        <img class="d-block mx-auto event-img" src="/images/upload/events/@viewModel.EventImageFileName" alt="@viewModel.Name" />
+                    </div>
+                    <div class="card-body border-top">
+                        <h5 class="card-title">@viewModel.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            @Html.DisplayFor(model => viewModel.EventStartTime) ~
+                            <br />
+                            @Html.DisplayFor(model => viewModel.EventEndTime)
+                        </h6>
+                        <p class="card-text">@viewModel.Description</p>
+                        <a class="btn details-btn" asp-controller="Events" asp-action="Details" asp-route-id="@viewModel.Id">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <h3 class="text-center">No events found</h3>
+}

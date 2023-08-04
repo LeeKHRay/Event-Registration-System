@@ -1,0 +1,61 @@
+﻿@model List<EventViewModel>
+
+@{
+    ViewData["Title"] = "My Events";
+}
+
+<div>
+    <h3>My Events</h3>
+
+    @if (ViewBag.EventsExist)
+    {
+        @await Component.InvokeAsync("EventsSearchBar", new { searchCriteria = ViewBag.SearchCriteria, eventNum = Model.Count })
+        <hr />
+        <div id="events" class="@ViewBag.UserPreferences?.Color">
+            @if (ViewBag.DisplayType == "Grid")
+            {
+                <partial name="_EventsGridPartial" for="@Model" />
+            }
+            else
+            {
+                <partial name="_EventsListPartial" for="@Model" />
+            }
+        </div>
+    }
+    else
+    {
+        <hr />
+        if (ViewBag.IsOrganizationUser)
+        {
+            <h4>You have not created any events yet</h4>
+        }
+        else
+        {
+            <h4>You have not enrolled any events yet</h4>
+        }
+    }
+</div>
+
+<partial name="_CreateEventButtonPartial" />
+
+@if (ViewBag.EventsExist)
+{
+    @section Styles {
+        <link rel="stylesheet" href="~/css/event_results.css">
+    }
+
+    @section Scripts {
+        <script>
+            @if (ViewBag.IsOrganizationUser)
+            {
+                <text>window.requestUrl = "@Url.Action("CreatedEventsPartial", "Events", new { organizationName = ViewBag.OrganizationName })"; </text>
+            }
+            else
+            {
+                <text>window.requestUrl = "@Url.Action("EnrolledEventsPartial", "Events")"; </text>
+            }
+            window.displayType = "@ViewBag.DisplayType";
+        </script>
+        <script src="~/js/events_search_bar.js" asp-append-version="true"></script>
+    }
+}

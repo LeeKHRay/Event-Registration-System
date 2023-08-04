@@ -1,0 +1,55 @@
+﻿@model EventSearchCriteria
+
+<div class="mb-3">
+    <form id="events-search-form">
+        <div class="row mb-2">
+            <div class="col-auto">
+                <div class="input-group">
+                    <label asp-for="CategoryId" class="input-group-text"></label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="@ViewBag.Categories">
+                        <option value="0">All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-auto col-sm">
+                <div class="input-group">
+                    <label asp-for="Name" class="input-group-text"></label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="button" id="search-events-btn" class="btn btn-outline-secondary">Search</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <div class="input-group">
+                    <label asp-for="SortBy" class="input-group-text"></label>
+                    <select asp-for="SortBy" class="form-select">
+                        <option value="-CreateTime">Date of Creation (New to Old)</option>
+                        <option value="+CreateTime">Date of Creation (Old to New)</option>
+                        <option value="+Name">Name (A to Z)</option>
+                        <option value="-Name">Name (Z to A)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-auto align-self-center">
+                <strong id="event-num">@ViewBag.EventNum Event@(ViewBag.EventNum == 1 ? "" : "s")</strong>
+            </div>
+            @if (ViewBag.IsSignedIn)
+            {
+                <div class="col d-flex align-self-center justify-content-center color-preference">
+                    @foreach (string color in new string[] { "blue", "red", "green" })
+                    {
+                        <div id="@color-btn" class="@(ViewBag.SelectedColor == color ? "selected" : null)"></div>
+                    }
+                </div>
+            }
+            <div class="col-auto ms-auto align-self-center view-buttons">
+                <i id="grid-view-btn" class="bi bi-grid rounded-1 fs-4 p-1"></i>
+                <i id="list-view-btn" class="bi bi-list-task rounded-1 fs-4 p-1"></i>
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+    </form>
+</div>

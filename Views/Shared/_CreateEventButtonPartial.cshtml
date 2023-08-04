@@ -1,0 +1,6 @@
+﻿@if (ViewBag.IsOrganizationUser == true) // if ViewBag.IsOrganizationUser is null, the comparison will be false
+{
+    <div id="create-btn">
+        <a class="btn btn-success" asp-controller="Events" asp-action="Create">+ Create New Event</a>
+    </div>
+}

@@ -1,0 +1,129 @@
+﻿@model EventDetailsViewModel
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<h1>Event Details</h1>
+<hr />
+
+<div>
+    <partial name="_MessageNotificationPartial" />
+
+    <h2>@Model.Name</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EnrollStartTime)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EnrollStartTime)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EnrollEndTime)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EnrollEndTime)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EventStartTime)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EventStartTime)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EventEndTime)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EventEndTime)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Quota)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Quota)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ApplicantNum)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ApplicantNum)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Organization)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Organization, "Organization")
+        </dd>
+    </dl>
+    @if (Model.EventImageFileNames.Count > 0)
+    {
+        <hr />
+        <div class="d-flex flex-wrap">
+            @foreach (var fileName in Model.EventImageFileNames)
+            {
+                <img class="m-1" src="~/images/upload/events/@fileName" asp-append-version="true" height="150" />
+            }
+        </div>
+        <hr />
+    }
+</div>
+
+<div>
+    @if (ViewBag.IsCreater)
+    {
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> <text>|</text>
+        <button id="delete-btn" class="btn btn-danger" data-id="@Model?.Id">Delete</button> <text>|</text>
+        @Html.AntiForgeryToken();
+    }
+    else
+    {
+        switch (ViewBag.EnrollBtnState)
+        {
+            case 1:
+                <form class="d-inline" asp-action="Enroll">
+                    <input type="hidden" asp-for="Id" />
+                    <button class="btn btn-primary" type="submit">Enroll</button>
+                </form>
+                <text>|</text>
+                break;
+            case 2:
+                <button type="button" class="btn btn-primary" disabled>The event is not available</button> <text>|</text>
+                break;
+            case 3:
+                <form class="d-inline" asp-action="CancellEnrollment">
+                    <input type="hidden" asp-for="Id" />
+                    <button class="btn btn-danger" type="submit">Cancel Enrollment</button>
+                </form>
+                <text>|</text>
+                break;
+            default:
+                break;
+        } 
+    }
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@if (ViewBag.IsCreater) {
+    @section Scripts {
+        <script src="~/js/delete_event.js" asp-append-version="true"></script>
+    }
+}

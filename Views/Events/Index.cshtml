@@ -1,0 +1,54 @@
+﻿@model List<EventViewModel>
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div>
+    @if (ViewBag.IsOrganizationUser)
+    {
+        <h3>Events</h3>
+    }
+    else {
+        <h3>Featured Events</h3>
+        @await Component.InvokeAsync("NewestEventsCarousel", new { count = 3 })
+    }
+
+    @if (ViewBag.EventsExist)
+    {
+        @await Component.InvokeAsync("EventsSearchBar", new { searchCriteria = ViewBag.SearchCriteria, eventNum = Model.Count })
+        <hr />
+        <div id="events" class="@ViewBag.UserPreferences?.Color">
+            @if (ViewBag.DisplayType == "Grid")
+            {
+                <partial name="_EventsGridPartial" for="@Model" />
+            }
+            else if (ViewBag.DisplayType == "List")
+            {
+                <partial name="_EventsListPartial" for="@Model" />
+            }
+        </div>
+    }
+    else
+    {
+        <hr />
+        <h4>There are no events yet</h4>
+    }
+</div>
+
+<partial name="_CreateEventButtonPartial" />
+
+@if (ViewBag.EventsExist)
+{
+    @section Styles {
+        <link rel="stylesheet" href="~/css/event_results.css">
+    }
+
+    @section Scripts {
+        <script>
+            window.requestUrl = "@Url.Action("EventsPartial", "Events")";
+            window.displayType = "@ViewBag.DisplayType";
+        </script>
+        <script src="~/js/events_search_bar.js" asp-append-version="true"></script>
+    }
+}

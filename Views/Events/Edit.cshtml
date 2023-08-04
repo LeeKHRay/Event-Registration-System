@@ -1,0 +1,91 @@
+﻿@model EventEditFormViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    DateTime now = DateTime.Now;
+    now = now.AddSeconds(-now.Second);
+}
+
+<h1>Edit your event</h1>
+<hr />
+
+<form id="event-form" asp-action="Edit" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EventCategoryId" class="form-label"></label>
+                <select asp-for="EventCategoryId" asp-items="@ViewBag.Categories" class="form-select"></select>
+                <span asp-validation-for="EventCategoryId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EnrollStartTime" class="form-label"></label>
+                <input asp-for="EnrollStartTime" class="form-control" readonly="@(ViewBag.DateTimes.EnrollStartTime <= now ? "readonly" : null)" />
+                <span asp-validation-for="EnrollStartTime" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EnrollEndTime" class="form-label"></label>
+                <input asp-for="EnrollEndTime" class="form-control" readonly="@(ViewBag.DateTimes.EnrollEndTime <= now ? "readonly" : null)" />
+                <span asp-validation-for="EnrollEndTime" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EventStartTime" class="form-label"></label>
+                <input asp-for="EventStartTime" class="form-control" readonly="@(ViewBag.DateTimes.EventStartTime <= now ? "readonly" : null)" />
+                <span asp-validation-for="EventStartTime" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="EventEndTime" class="form-label"></label>
+                <input asp-for="EventEndTime" class="form-control" readonly="@(ViewBag.DateTimes.EventEndTime <= now ? "readonly" : null)" />
+                <span asp-validation-for="EventEndTime" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Quota" class="form-label"></label>
+                <input asp-for="Quota" class="form-control" />
+                <span asp-validation-for="Quota" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <partial name="_ImageUploaderPartial" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <button type="button" id="submit-btn" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/image_uploader.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/upload_files.js" asp-append-version="true"></script>
+}

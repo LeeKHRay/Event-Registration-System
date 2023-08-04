@@ -1,0 +1,55 @@
+﻿@model OrganizationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Organization - " + Model.Name;
+}
+
+<div>
+    <div class="mb-2">
+        <h3>@Model.Name</h3>
+        Website: 
+        @if (Model.Website != null) {
+            <a href="@Model.Website">@Model.Website</a>
+        }
+        else
+        {
+            <text>N/A</text>
+        }
+    </div>
+    <hr />
+
+    @if (ViewBag.EventsExist)
+    {
+        @await Component.InvokeAsync("EventsSearchBar", new { searchCriteria = ViewBag.SearchCriteria, eventNum = Model.Events?.Count ?? 0 })
+        <hr />
+        <div id="events" class="@ViewBag.UserPreferences?.Color">
+            @if (ViewBag.DisplayType == "Grid")
+            {
+                <partial name="_EventsGridPartial" for="Events" />
+            }
+            else
+            {
+                <partial name="_EventsListPartial" for="Events" />
+            }
+        </div>
+    }
+    else
+    {
+        <h3>This organization has not created any events yet</h3>
+    }
+</div>
+
+@if (ViewBag.EventsExist)
+{
+    @section Styles {
+        <link rel="stylesheet" href="~/css/event_results.css">
+    }
+
+    @section Scripts {
+        <script>
+            window.requestUrl = "@Url.Action("CreatedEventsPartial", "Events", new { organizationName = Model.UserName })";
+            window.displayType = "@ViewBag.DisplayType";
+        </script>
+        <script src="~/js/events_search_bar.js" asp-append-version="true"></script>
+    }
+}

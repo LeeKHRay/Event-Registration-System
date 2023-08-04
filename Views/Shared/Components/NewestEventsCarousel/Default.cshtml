@@ -1,0 +1,33 @@
+﻿@model List<EventViewModel>
+
+@if (Model.Count > 0)
+{
+    <div id="newest-events-carousel" class="carousel carousel-dark slide border border-1 mb-3" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <button type="button" data-bs-target="#newest-events-carousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : null)"></button>
+            }
+        </div>
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var viewModel = @Model[i];
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@viewModel.Id" class="text-decoration-none">
+                        <img src="~/images/upload/events/@viewModel.EventImageFileName" class="d-block mx-auto" height="300" alt="@viewModel.Name">
+                        <h3 class="text-dark text-center position-relative mb-5">@viewModel.Name</h3>
+                    </a>
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#newest-events-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#newest-events-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+}

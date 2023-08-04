@@ -1,0 +1,45 @@
+﻿.color-preference > div, .view-buttons > i.bi {
+    cursor: pointer;
+}
+
+.color-preference, .view-buttons {
+    caret-color: transparent;
+}
+
+.view-buttons > i.bi {
+    color: gray;
+    border: 1px solid gray;
+}
+
+.view-buttons > i.bi:hover {
+    color: black;
+    border: 1px solid black;
+}
+
+#blue-btn {
+    --color: var(--blue);
+}
+
+#red-btn {
+    --color: var(--red);
+}
+
+#green-btn {
+    --color: var(--green);
+}
+
+.color-preference > div {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--color);
+    background-clip: padding-box;
+    margin: 0 5px;
+}
+
+.color-preference > div.selected {
+    border: 0.3rem solid transparent;
+    box-shadow: 0 0 0 0.1rem var(--color);
+}

@@ -1,0 +1,25 @@
+﻿@model EventFormViewModel
+
+<div class="mb-3">
+    Event images
+    <div id="drop-area" class="d-flex flex-column align-items-center justify-content-center">
+        <i class="upload-icon bi bi-images"></i>
+        <span class="upload-method">drag & drop</span>
+        <span>or <label asp-for="FormImages" class="btn-link upload-method">browse</label></span>
+        <input type="file" asp-for="FormImages" hidden multiple />
+        <span class="support">Supports: JPEG, JPG, PNG</span>
+
+        <div id="images-preview" class="d-flex flex-wrap">
+            @if (ViewBag.Images != null)
+            {
+                foreach (var image in ViewBag.Images)
+                {
+                    <div class="uploaded-img position-relative">
+                        <img src="~/images/upload/events/@image.FileName" data-img-id="@image.Id" draggable="false">
+                        <i class="bi bi-x-lg"></i>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

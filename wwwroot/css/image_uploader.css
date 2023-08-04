@@ -1,0 +1,68 @@
+﻿div#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 20px;
+    font-family: sans-serif;
+    margin: 5px auto 20px auto;
+    padding: 20px;
+}
+
+div#drop-area.highlight {
+    border: 2px solid purple;
+}
+
+.upload-icon {
+    font-size: 3em;
+}
+
+.upload-method {
+    font-size: 1.5em;
+}
+
+label.upload-method.btn-link {
+    cursor: pointer;
+}
+
+span.support {
+    font-size: 0.8em;
+}
+
+div#images-preview > div {
+    border: 1px solid black;
+    margin: 4px;
+    cursor: pointer;
+}
+
+div#images-preview img {
+    height: 150px;
+}
+
+div.uploaded-img > .bi {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: grey;
+    font-size: 60px;
+    visibility: hidden;
+    opacity: 0;
+    caret-color: transparent;
+}
+
+div.uploaded-img:hover > img {
+    filter: brightness(75%);
+}
+
+div.uploaded-img:hover > img + .bi {
+    visibility: visible;
+    opacity: 1;
+}
+
+div.uploaded-img > img.unselected {
+    filter: brightness(55%);
+}
+
+div.uploaded-img > img.unselected + .bi {
+    color: black;
+    visibility: visible;
+    opacity: 1;
+}
